@@ -6,8 +6,8 @@ import 'package:rick_app/repository/character_repository_impl.dart';
 part 'get_characters_event.dart';
 part 'get_characters_state.dart';
 
-class GetCharactersBloc extends Bloc<GetCharactersEvent, GetCharactersState> {
-  GetCharactersBloc() : super(GetCharactersInitial()) {
+class CharactersBloc extends Bloc<GetCharactersEvent, CharactersState> {
+  CharactersBloc() : super(const CharactersState()) {
     on<GetCharacters>(
       (event, emit) async {
         await _onGetCharacters(event, emit);
@@ -16,14 +16,21 @@ class GetCharactersBloc extends Bloc<GetCharactersEvent, GetCharactersState> {
   }
 
   Future<void> _onGetCharacters(
-      GetCharacters event, Emitter<GetCharactersState> emit) async {
-    emit(GetCharactersLoading());
+      GetCharacters event, Emitter<CharactersState> emit) async {
     try {
       final result = await CharacterRepositoryImpl().getCharacters();
-      emit(GetCharactersLoaded(characters: result));
+      emit(
+        state.copyWith(
+          status: CharactersStatus.success,
+          characters: result,
+        ),
+      );
     } catch (e) {
-      print(e);
-      emit(GetCharactersError());
+      emit(
+        state.copyWith(
+          status: CharactersStatus.failure,
+        ),
+      );
     }
   }
 }

@@ -26,19 +26,21 @@ class _HomeScreenState extends State<HomeScreen> {
         currentIndex: _currentIndex,
         items: [
           const BottomNavigationBarItem(
-              icon: Icon(
-                Icons.person_search,
-              ),
-              label: 'Characters'),
+            icon: Icon(
+              Icons.person_search,
+            ),
+            label: 'Characters',
+          ),
           BottomNavigationBarItem(
-              icon: const Icon(
-                Icons.favorite,
-              ),
-              activeIcon: Icon(
-                Icons.favorite,
-                color: Colors.pink[200],
-              ),
-              label: 'Favourites'),
+            icon: const Icon(
+              Icons.favorite,
+            ),
+            activeIcon: Icon(
+              Icons.favorite,
+              color: Colors.pink[200],
+            ),
+            label: 'Favourites',
+          ),
         ],
         onTap: (index) {
           setState(() {

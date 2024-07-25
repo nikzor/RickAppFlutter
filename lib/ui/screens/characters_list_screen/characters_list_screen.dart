@@ -13,25 +13,25 @@ class CharactersListScreen extends StatefulWidget {
 class _CharactersListScreenState extends State<CharactersListScreen> {
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.of<CharactersBloc>(context);
-
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Center(
-        child: BlocBuilder<CharactersBloc, CharactersState>(
-          bloc: bloc,
-          builder: (context, state) {
-            switch (state.status) {
-              case CharactersStatus.initial:
-                return const CircularProgressIndicator();
-              case CharactersStatus.success:
-                return CharactersList(
-                  characters: state.characters,
-                );
-              case CharactersStatus.failure:
-                return const Text('Error');
-            }
-          },
+    return BlocProvider(
+      create: (context) => CharactersBloc()..add(GetCharacters()),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: BlocBuilder<CharactersBloc, CharactersState>(
+            builder: (context, state) {
+              switch (state.status) {
+                case CharactersStatus.initial:
+                  return const CircularProgressIndicator();
+                case CharactersStatus.success:
+                  return CharactersList(
+                    characters: state.characters,
+                  );
+                case CharactersStatus.failure:
+                  return const Text('Error');
+              }
+            },
+          ),
         ),
       ),
     );

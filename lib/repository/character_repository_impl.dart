@@ -5,9 +5,10 @@ import 'package:rick_app/repository/character_repository.dart';
 
 class CharacterRepositoryImpl extends CharacterRepository {
   @override
-  Future<List<Character>> getCharacters() async {
+  Future<List<Character>> getCharacters({int page = 1}) async {
     try {
-      final response = await DioClient.instance.get(characters);
+      final response =
+          await DioClient.instance.get(charactersByPage + page.toString());
       final charactersList = (response['results'] as List)
           .map((e) => Character.fromJson(e))
           .toList();

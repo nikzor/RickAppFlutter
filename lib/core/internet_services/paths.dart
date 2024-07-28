@@ -1,2 +1,2 @@
 String baseUrl = "https://rickandmortyapi.com/api/";
-String characters = "/character";
+String charactersByPage = "/character/?page=";

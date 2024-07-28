@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick_app/domain/model.dart';
+import 'package:rick_app/ui/bloc/get_characters_bloc.dart';
 import 'package:rick_app/ui/screens/characters_list_screen/character_card.dart';
 
 class CharactersList extends StatefulWidget {
@@ -25,9 +27,8 @@ class _CharactersListState extends State<CharactersList> {
   }
 
   void _onScroll() {
-    if (_scrollController.position.pixels ==
-        _scrollController.position.maxScrollExtent) {
-      // TODO: add logic for the case when user reach end of the 1st page
+    if (_scrollController.position.extentAfter < 500) {
+      context.read<CharactersBloc>().add(GetCharacters());
     }
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class CharacterCard extends StatelessWidget {
   const CharacterCard({
@@ -27,39 +28,37 @@ class CharacterCard extends StatelessWidget {
             height: 100,
           ),
           const SizedBox(width: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                name,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-              Text(
-                'Status: $status',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
+                ...[
+                  'Status: $status',
+                  'Species: $species',
+                  'Gender: $gender',
+                ].map(
+                  (descriptionText) => Text(
+                    descriptionText,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
                 ),
-              ),
-              Text(
-                'Species: $species',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              Text(
-                'Gender: $gender',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ],
+              ],
+            ),
           )
         ],
       ),

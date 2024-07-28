@@ -17,4 +17,14 @@ class CharacterRepositoryImpl extends CharacterRepository {
       throw Exception('Something wrong, try again later');
     }
   }
+
+  @override
+  Future<int> getMaxPageLimit() async {
+    try {
+      final response = await DioClient.instance.get(baseCharactersUrl);
+      return response['info']['pages'];
+    } catch (e) {
+      throw Exception('Something wrong, try again later');
+    }
+  }
 }

@@ -11,28 +11,33 @@ final class CharactersState extends Equatable {
     this.status = CharactersStatus.initial,
     this.characters = const <Character>[],
     this.page = 1,
-    this.hasReachedMax = false,
+    this.maxPageLimit = 1,
   });
 
   final CharactersStatus status;
   final List<Character> characters;
   final int page;
-  final bool hasReachedMax;
+  final int maxPageLimit;
 
   CharactersState copyWith({
     CharactersStatus? status,
     List<Character>? characters,
     int? page,
-    bool? hasReachedMax,
+    int? maxPageLimit,
   }) {
     return CharactersState(
       status: status ?? this.status,
       characters: characters ?? this.characters,
       page: page ?? this.page,
-      hasReachedMax: hasReachedMax ?? this.hasReachedMax,
+      maxPageLimit: maxPageLimit ?? this.maxPageLimit,
     );
   }
 
   @override
-  List<Object> get props => [status, characters, page, hasReachedMax];
+  List<Object> get props => [
+        status,
+        characters,
+        page,
+        maxPageLimit,
+      ];
 }

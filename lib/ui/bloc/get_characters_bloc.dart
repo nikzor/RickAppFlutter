@@ -28,16 +28,28 @@ class CharactersBloc extends Bloc<GetCharactersEvent, CharactersState> {
   Future<void> _onGetCharacters(
       GetCharacters event, Emitter<CharactersState> emit) async {
     try {
-      final result =
-          await CharacterRepositoryImpl().getCharacters(page: state.page);
-
-      return emit(
-        state.copyWith(
-          status: CharactersStatus.success,
-          characters: List.of(state.characters)..addAll(result),
-          page: state.page + 1,
-        ),
-      );
+      if (state.status == CharactersStatus.initial) {
+        final result = await CharacterRepositoryImpl().getCharacters();
+        final maxPageLimit = await CharacterRepositoryImpl().getMaxPageLimit();
+        return emit(
+          state.copyWith(
+            status: CharactersStatus.success,
+            characters: List.of(state.characters)..addAll(result),
+            page: state.page + 1,
+            maxPageLimit: maxPageLimit,
+          ),
+        );
+      } else if (state.page <= state.maxPageLimit) {
+        final result =
+            await CharacterRepositoryImpl().getCharacters(page: state.page);
+        return emit(
+          state.copyWith(
+            status: CharactersStatus.success,
+            characters: List.of(state.characters)..addAll(result),
+            page: state.page + 1,
+          ),
+        );
+      }
     } catch (e) {
       emit(
         state.copyWith(

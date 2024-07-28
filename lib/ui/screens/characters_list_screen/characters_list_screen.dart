@@ -10,9 +10,12 @@ class CharactersListScreen extends StatefulWidget {
   State<CharactersListScreen> createState() => _CharactersListScreenState();
 }
 
-class _CharactersListScreenState extends State<CharactersListScreen> {
+class _CharactersListScreenState extends State<CharactersListScreen>
+    with AutomaticKeepAliveClientMixin<CharactersListScreen> {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return BlocProvider(
       create: (context) => CharactersBloc()..add(GetCharacters()),
       child: Padding(
@@ -36,4 +39,7 @@ class _CharactersListScreenState extends State<CharactersListScreen> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -10,11 +10,24 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late final PageController _pageController;
   int _currentIndex = 0;
   final pages = [
     const CharactersListScreen(),
     const FavouritesScreen(),
   ];
+
+  @override
+  void initState() {
+    _pageController = PageController(initialPage: _currentIndex);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +58,16 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: (index) {
           setState(() {
             _currentIndex = index;
+            _pageController.jumpToPage(_currentIndex);
           });
         },
       ),
       body: SafeArea(
-        child: pages[_currentIndex],
+        child: PageView(
+          controller: _pageController,
+          physics: const NeverScrollableScrollPhysics(),
+          children: pages,
+        ),
       ),
     );
   }
